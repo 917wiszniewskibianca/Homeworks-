@@ -1,2 +1,2 @@
-# Homeworks-
-faculty projects
+# Homeworks
+university projects
