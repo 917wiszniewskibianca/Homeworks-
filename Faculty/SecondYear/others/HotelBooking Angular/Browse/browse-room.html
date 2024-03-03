@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="browse.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="browse.js"></script>
+
+    <title>Browse</title>
+</head>
+<body>
+<h1>Room Booking </h1>
+<div class="find-container">
+    <h2>Find Room </h2>
+
+    <div class="settings">
+        <label>Category </label>
+        <input type="text" id="category" name="category">
+        <label>Type</label>
+        <input type="text" id="type" name="type">
+        <label>Price</label>
+        <input type="text" id="price" name="price">
+        <label>Hotel</label>
+        <input type="text" id="hotel" name="hotel">
+    </div>
+    <input type="submit" class="submit" value="Find" id="submitButton">
+</div>
+
+<table id="dataTable" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Hotel</th>
+    </tr>
+    </thead>
+
+    <tbody id="tbodyTable">
+    </tbody>
+
+</table>
+
+<div class="paginator">
+    <input type="submit" class="submit" value="<" id="prevButton">
+    <input type="text" id="pageNumber" name="pageNumber" style="text-align: center">
+    <input type="submit" class="submit" value=">" id="nextButton">
+</div>
+
+
+</body>
+</html>

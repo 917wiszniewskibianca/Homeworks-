@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+    <title>Browse rooms</title>
+    <link rel="icon" href="../Resources/t.jpeg">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="browse.js"></script>
+
+    <style type="text/css">
+        body{
+            background-image: url("../Resources/t.jpeg");
+        }
+
+        p{
+            margin-top: 250px;
+            text-align: center;
+            font-size: 50px;
+            color:white;
+            font-weight: bold;
+        }
+
+        h1{
+            position: absolute;
+            top: 10%;
+            right: 50%;
+            transform: translate(50%,-50%);
+            text-transform: uppercase;
+            font-family: verdana;
+            font-size: 3em;
+            font-weight: 700;
+            color: darkred;
+        }
+
+        .submit{
+            margin: auto;
+            margin-top: 10px;
+            width: 200px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            font-weight: bold;
+            background-color: grey;
+            color: white;
+        }
+
+        label{
+            font-size: 25px;
+            color:white;
+            font-weight: bold;
+        }
+
+        div.settings {
+            display:grid;
+            justify-content: center;
+            grid-template-columns: max-content max-content;
+            grid-gap:5px;
+        }
+
+        #dataTable {
+            margin-top: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #dataTable td, #dataTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #dataTable tr {background-color: #f2f2f2;}
+
+        #dataTable tr:hover {background-color: #ddd;}
+
+        #dataTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: grey;
+            color: white;
+        }
+
+        .paginator{
+            align-content: center;
+            display:flex;
+        }
+
+    </style>
+</head>
+
+
+<body>
+<h1>Room Booking</h1>
+<div class="container">
+    <p>Find room</p>
+    <div class="settings">
+        <label>Category</label>
+        <input type="text" id="category" name="category">
+        <label>Type</label>
+        <input type="text" id="type" name="type">
+        <label>Price</label>
+        <input type="text" id="price" name="price">
+        <label>Hotel</label>
+        <input type="text" id="hotel" name="hotel">
+    </div>
+    <input type="submit" class="submit" value="Find" id="submitButton">
+</div>
+
+<table id="dataTable" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Hotel</th>
+    </tr>
+    </thead>
+
+    <tbody id="tbodyTable">
+    </tbody>
+
+</table>
+
+<div class="paginator">
+    <input type="submit" class="submit" value="<" id="prevButton">
+    <input type="text" id="pageNumber" name="pageNumber" style="text-align: center">
+    <input type="submit" class="submit" value=">" id="nextButton">
+</div>
+
+</body>
+</html>

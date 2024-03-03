@@ -1,0 +1,16 @@
+.container-main{
+  background-image: url("../Resources/castle.jpg");
+  text-align : center;
+
+}
+
+.title-main{
+  font-size: 70px ;
+  color: darkred;
+}
+
+button{
+  font-size: 25px;
+  font-family: Verdana;
+  background-color: grey;
+}

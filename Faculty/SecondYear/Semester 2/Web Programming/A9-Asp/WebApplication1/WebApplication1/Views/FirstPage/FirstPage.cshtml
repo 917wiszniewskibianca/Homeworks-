@@ -1,0 +1,55 @@
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ShowPopup != null && ViewBag.ShowPopup)
+    {<script>
+            alert("Grade added successfully!");
+       
+    </script>
+}
+
+
+<h2>Welcome to Home Page </h2>
+
+<div>
+    <h3>Search Students for a Course</h3>
+    <input type="text" id="courseName" />
+    <button onclick="goToAllParticipants()">Go</button>
+</div>
+
+<div>
+    <h3>Search Courses for a Student</h3>
+    <input type="text" id="studentName" />
+    <button onclick="goToAllCoursesForStudent()">Go</button>
+</div>
+
+<div>
+    <h3>Add grade for a Student</h3>
+    <input type="text" id="studentName1" />
+    <input type="text" id="course"/>
+    <input type="text" id="studentGrade" />
+    <p1>Name Course Grade </p1>
+    <button onclick="goToAddGradeForStudent()">Go</button>
+</div>
+
+<script>
+    function goToAllParticipants() {
+        var courseName = document.getElementById('courseName').value;
+        window.location.href = '@Url.Action("AllParticipantsToCourse", "Course")' + '?courseName=' + courseName;
+    }
+
+    function goToAllCoursesForStudent() {
+        var studentName = document.getElementById('studentName').value;
+        window.location.href = '@Url.Action("AllCoursesForStudent", "Course")' + '?studentName=' + studentName;
+    }
+    
+    function goToAddGradeForStudent(){
+        var studentName1 = document.getElementById('studentName1').value;
+        var course=document.getElementById('course').value;
+        var studentGrade = document.getElementById('studentGrade').value;
+        window.location.href =  '@Url.Action("AddGrade","Course")' + '?studentName=' + studentName1 + '&studentCourse='+ course +'&studentGrade=' + studentGrade;
+    }
+ 
+</script>

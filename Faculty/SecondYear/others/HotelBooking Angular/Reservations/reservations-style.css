@@ -1,0 +1,51 @@
+body{
+    background-image: url("../Resources/castle.jpg");
+    text-align: center;
+    font-size: 25px;
+}
+h1{
+    margin-top : 20%;
+
+}
+
+label{
+    font-size: 25px;
+    color:white;
+    font-weight: bold;
+}
+
+.addReservation{
+    font-size: 30px;
+    position: center;
+
+}
+.removeReservation{
+    font-size: 30px;
+    position: center;
+    color: firebrick;
+}
+.settings{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: max-content max-content;
+    grid-gap:5px;
+}
+
+#dataTable,#myReservationTable{
+    margin-top: 90px;
+    border-collapse: collapse;
+    width: 100%;
+    color: white;
+    border: 1px solid #ddd;
+    padding: 8px;
+
+}
+#notFreeInterval{
+    margin-top: 90px;
+    border-collapse: collapse;
+    width: 100%;
+    color: white;
+    border: 1px solid #ddd;
+    padding: 8px;
+
+}

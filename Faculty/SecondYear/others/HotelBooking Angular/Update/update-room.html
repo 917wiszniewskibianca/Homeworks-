@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="update.css">
+    <title>Title</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+        function popTable(){
+            var id= "";
+            var category ="";
+            var type = "";
+            var price = "";
+            var hotel = "";
+
+
+            $.ajax({
+                url: "populateTable.php",
+                type: "GET",
+                data: { id:id, category:category,  type:type, price:price, hotel:hotel},
+                success:function (result) {
+                    $('#tbodyTable').html(result);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            popTable();
+
+            $('#submitButton').click(function () {
+                var id = $("#id").val();
+                var category = $("#category").val();
+                var type = $("#type").val();
+                var hotel = $("#hotel").val();
+                var price = $("#price").val();
+
+
+                if (category != '' && type != '' && hotel != '' && price != '')
+                {
+                    $.ajax({
+                        url: "update-room.php",
+                        type: "POST",
+                        data: { id:id,category:category, type:type, hotel:hotel, price:price},
+                        success:function (result) {
+                            window.location.href = "update-room.html";
+                            alert(result);
+                        }
+                    })
+                }
+                else{
+                    alert("Complete the required fields!");
+                }
+            });
+
+
+            $('#tbodyTable').click(function (){
+                {
+                    var table = document.getElementById('dataTable');
+
+                    for(var i = 1; i < table.rows.length; i++)
+                    {
+                        table.rows[i].onclick = function()
+                        {
+                            document.getElementById("id").value = this.cells[0].innerHTML;
+                            document.getElementById("category").value = this.cells[1].innerHTML;
+                            document.getElementById("type").value = this.cells[2].innerHTML;
+                            document.getElementById("price").value = this.cells[3].innerHTML;
+                            document.getElementById("hotel").value = this.cells[4].innerHTML;
+                        };
+                    }
+                }
+            });
+
+
+        })
+
+
+    </script>
+
+</head>
+<body>
+<h1> Room Booking </h1>
+<div class="container">
+    <p>Update room</p>
+    <div class="settings">
+        <label>RoomID</label>
+        <input type="text" id="id" name="id" readonly>
+        <label>Category</label>
+        <input type="text" id="category" name="category">
+        <label>Type</label>
+        <input type="text" id="type" name="type">
+        <label>Price</label>
+        <input type="text" id="price" name="price">
+        <label>Hotel</label>
+        <input type="text" id="hotel" name="hotel">
+    </div>
+    <input type="submit" class="submit" value="Update" id="submitButton">
+</div>
+
+<table id="dataTable">
+    <tr>
+        <th>RoomID</th>
+        <th>Category</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Hotel</th>
+    </tr>
+    <tbody id="tbodyTable">
+    </tbody>
+</table>
+
+</body>
+</html>

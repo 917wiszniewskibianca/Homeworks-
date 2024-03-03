@@ -1,0 +1,14 @@
+<body>
+<h1>Hotel Booking</h1>
+<div class="remove-container">
+  <h2>Remove room </h2>
+  <div class="remove-settings">
+    <label> Room Id </label>
+    <input type="text" #txtId (keyup.enter) = "GetId(txtId.value)" >
+
+  </div>
+  <input type="submit" class="submit" value="Delete" id="submitButton" (click)="onDelete()">
+
+</div>
+
+</body>

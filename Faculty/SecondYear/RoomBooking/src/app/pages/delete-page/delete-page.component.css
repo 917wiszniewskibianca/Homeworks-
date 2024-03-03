@@ -1,0 +1,28 @@
+body{
+  background-image: url("../Resources/castle.jpg");
+  text-align: center;
+  font-size : 25px;
+  margin-top: 20%;
+
+}
+
+.remove-settings{
+  display: grid;
+  justify-content: center;
+  grid-template-columns: max-content max-content;
+  grid-gap:5px;
+}
+
+
+
+label{
+  font-size: 25px;
+  color:white;
+  font-weight: bold;
+}
+
+.remove-container{
+  position: center;
+
+}
+

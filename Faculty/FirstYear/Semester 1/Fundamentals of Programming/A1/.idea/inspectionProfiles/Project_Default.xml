@@ -1,0 +1,21 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="drinks.models.Train.DoesNotExist" />
+          <option value="drinks.models.Train.objects" />
+          <option value="drinks.models.Customers.objects" />
+          <option value="drinks.models.Customers.DoesNotExist" />
+          <option value="drinks.models.Schedule.objects" />
+          <option value="drinks.models.Schedule.DoesNotExist" />
+          <option value="drinks.models.Station.object" />
+          <option value="drinks.models.Stops.object" />
+          <option value="drinks.models.Station.objects" />
+          <option value="drinks.models.Stops.objects" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

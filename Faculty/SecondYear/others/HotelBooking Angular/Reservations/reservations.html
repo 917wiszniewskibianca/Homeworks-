@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations</title>
+    <link rel="stylesheet" href="reservations-style.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#addButton1').click(function () {
+                var firstName = $("#addFirstName").val();
+                var lastName = $("#addLastName").val();
+                var roomId = $("#addRoomID").val();
+                var startDate = $("#addStartDate").val();
+                var endDate = $("#addEndDate").val();
+
+
+                if (firstName != '' && lastName != '' && startDate != '' && endDate != '' && roomId != ' ') {
+                    $.ajax({
+                        url: "addReservation.php",
+                        type: "POST",
+                        data: {
+                            firstName: firstName,
+                            lastName: lastName,
+                            roomId: roomId,
+                            startDate: startDate,
+                            endDate: endDate
+                        },
+                        success: function (result) {
+                            window.location.href = "reservations.html";
+                            alert(result);
+                        }
+                    })
+                } else {
+                    alert("Complete the required fields!");
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('#intervalButton').click(function () {
+
+                var roomId = $("#addRoomID").val();
+                var startDate = "";
+                var endDate = "";
+
+                $.ajax({
+                    url: "showIntervals.php",
+                    type: "GET",
+                    data: {startDate: startDate, endDate: endDate, roomId: roomId},
+                    success: function (result) {
+                        $('#notFreeIntervalBody').html(result);
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $('#findButton').click(function(){
+
+                var reservationId= $("#reservation_id").val();
+                var roomId= "";
+                var category = "";
+                var type = "";
+                var price = "";
+                var hotel = "";
+                var startDate = "";
+                var endDate = "";
+
+                $.ajax({
+                    url: "populateTable.php",
+                    type: "GET",
+                    data: { id:reservationId, roomId:roomId, category:category,type:type,price:price,hotel:hotel,startDate:startDate,endDate:endDate},
+                    success:function (result) {
+                        $('#myReservationTableBody').html(result);
+                    }
+                });
+            });
+
+        });
+        $(document).ready(function () {
+            $('#deleteButton').click(function () {
+                var reservationId = $("#reservation_id").val()
+
+                if (reservationId != "") {
+                    $.ajax({
+                        url: "cancelReservation.php",
+                        type: "POST",
+                        data: {id: reservationId},
+                        success: function (result) {
+                            window.location.href = "reservations.html";
+                            alert(result);
+                        }
+                    })
+                } else {
+                    alert("Complete the required fields!");
+                }
+            });
+        });
+
+
+
+    </script>
+
+
+</head>
+<body>
+<h1> Room Booking </h1>
+<div class="container">
+
+    <div class="addReservation">
+        <p>Add <br>reservation</p>
+        <div class="settings">
+            <label>First name</label>
+            <input type="text" id="addFirstName" name="addFirstName" >
+            <label>Last name</label>
+            <input type="text" id="addLastName" name="addLastName" >
+            <label style="color: black">Room data:</label>
+            <br>
+            <label>RoomID</label>
+            <input type="text" id="addRoomID" name="addRoomID" >
+            <label>Category</label>
+            <input type="text" id="addCategory" name="addCategory" readonly >
+            <label>Type</label>
+            <input type="text" id="addType" name="addType" readonly >
+            <label>Price</label>
+            <input type="text" id="addPrice" name="addPrice" readonly>
+            <label>Hotel</label>
+            <input type="text" id="addHotel" name="addHotel" readonly >
+            <label style="color: black">Reservation Info:</label>
+            <br>
+            <label>Start date</label>
+            <input type="text" id="addStartDate" name="addStartDate" placeholder="YYYY-MM-DD">
+            <label>End date</label>
+            <input type="text" id="addEndDate" name="addEndDate" placeholder="YYYY-MM-DD">
+        </div>
+        <input type="submit" class="submit" value="Show unavailable intervals" id="intervalButton">
+        <input type="submit" class="submit" value="Add" id="addButton1">
+    </div>
+
+    <table id="notFreeInterval">
+        <tr>
+            <th>Unavailable Intervals</th>
+        </tr>
+        <tbody id="notFreeIntervalBody">
+        </tbody>
+    </table>
+    <div class="removeReservation">
+        <p>Cancel reservation</p>
+        <div class="settings">
+            <label> Reservation Id</label>
+            <input type="text" id="reservation_id" >
+        </div>
+        <input type="submit" class="submit" value="Find my reservations" id="findButton">
+        <input type="submit" class="submit" value="Delete" id="deleteButton">
+    </div>
+    <div >
+        <table id="myReservationTable">
+            <tr>
+                <th>ReservationID</th>
+                <th>RoomID</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Hotel</th>
+                <th>Start date</th>
+                <th>End date</th>
+            </tr>
+            <tbody id="myReservationTableBody">
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

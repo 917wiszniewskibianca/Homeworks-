@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="remove.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Remove</title>
+    <script type="text/javascript" >
+
+        $(document).ready(function () {
+
+            $('#submitButton').click(function () {
+                var id = $("#id").val();
+
+                if (id != '') {
+                    $.ajax({
+                        url: "remove-room.php",
+                        type: "POST",
+                        data: {id: id},
+                        success: function (result) {
+                            window.location.href = "remove-room.html";
+                            alert(result);
+                        }
+                    })
+                } else {
+                    alert("Complete the required fields!");
+                }
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+<h1>Hotel Booking</h1>
+<div class="remove-container">
+    <h2>Remove room </h2>
+    <div class="remove-settings">
+        <label> Room Id </label>
+        <input type="text" id="id" name="id">
+
+    </div>
+    <input type="submit" class="submit" value="Delete" id="submitButton">
+
+</div>
+
+</body>
+</html>

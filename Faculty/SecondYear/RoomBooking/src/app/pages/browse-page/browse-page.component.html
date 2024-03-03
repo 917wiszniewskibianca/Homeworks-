@@ -1,0 +1,60 @@
+<div class="main-class-container">
+  <span class="title-main">Room Booking</span>
+
+  <div class="find-container">
+    <h2>Find Room</h2>
+  <div class="settings">
+
+      <label>Category</label>
+      <input type="text" #txtCategory (keyup.enter) = "GetCategory(txtCategory.value)" >
+      <label>Type</label>
+      <input type="text" #txtType (keyup.enter) = "GetType(txtType.value)" >
+      <label>Price</label>
+      <input type="text" #txtPrice (keyup.enter) = "GetPrice(txtPrice.value)" >
+      <label>Hotel</label>
+      <input type="text" #txtHotel (keyup.enter) = "GetHotel(txtHotel.value)" >
+
+    <input type="submit" class="submit" value="Find" id="submitButton" (click)="findRooms()">
+  </div>
+  <table id="dataTable" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Hotel</th>
+      </tr>
+    </thead>
+
+                             <!-- Problema cu afisarea camerelor-->
+    <!--   <tbody>
+  <tr *ngFor="let room of rooms">
+    <td>{{ room.id }}</td>
+    <td>{{ room.category }}</td>
+    <td>{{ room.type }}</td>
+    <td>{{ room.price }}</td>
+    <td>{{ room.hotel }}</td>
+  </tr>
+  </tbody>
+  -->
+    <tbody>
+    <th *ngFor="let column of columns">{{column}}</th>
+    <tr *ngFor="let room of rooms">
+      <td>{{ room.id }}</td>
+      <td>{{ room.price }}</td>
+      <td>{{ room.type }}</td>
+      <td>{{ room.price }}</td>
+      <td>{{ room.hotel }}</td>
+    </tr>
+    </tbody>
+
+  </table>
+<form>
+  <div class="paginator">
+    <input type="submit" class="submit" value="<" id="prevButton" (click)="prevPage()">
+    {{ currentPage }}
+    <input type="submit" class="submit" value=">" id="nextButton" (click)="nextPage()">
+  </div>
+</form>
+</div>
+</div>

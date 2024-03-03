@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Channels</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<div id="tbodyTable">
+</div>
+
+
+<div id="redirect2">
+    <button type="submit" onclick="findMostPopularFilename()">Most Viewed Page </button>
+</div>
+
+<div id="popularFilename"></div>
+
+<div class="paginator">
+    <input type="submit" class="submit" value="<" id="prevButton">
+    <input type="text" id="pageNumber" name="pageNumber" style="text-align: center">
+    <input type="submit" class="submit" value=">" id="nextButton">
+</div>
+
+
+<script>
+    // Keep track of filenames and their occurrence count
+    var filenameOccurrences = {};
+
+    // Function to update the filename occurrences
+    function updateFilenameOccurrences() {
+        // Get all the filenames displayed on the current page
+        var filenamesOnPage = Array.from(document.querySelectorAll('#tbodyTable td:nth-child(3)')).map(function(td) {
+            return td.textContent;
+        });
+
+        // Increment the occurrence count for each filename on the current page
+        filenamesOnPage.forEach(function(filename) {
+            if (filename in filenameOccurrences) {
+                filenameOccurrences[filename]++;
+            } else {
+                filenameOccurrences[filename] = 1;
+            }
+        });
+    }
+
+    // Function to find the most popular filename
+    function findMostPopularFilename() {
+        var mostPopularFilename = '';
+        var maxOccurrences = 0;
+
+        // Iterate over the filenames and their occurrences
+        for (var filename in filenameOccurrences) {
+            if (filenameOccurrences[filename] > maxOccurrences) {
+                mostPopularFilename = filename;
+                maxOccurrences = filenameOccurrences[filename];
+            }
+        }
+        document.getElementById("popularFilename").innerText = "Most popular filename: " + mostPopularFilename;
+    }
+
+    // Attach event handlers to pagination buttons
+    $('#prevButton').click(function() {
+        updateFilenameOccurrences();
+    });
+    $('#nextButton').click(function() {
+        updateFilenameOccurrences();
+    });
+
+    // Call the updateFilenameOccurrences function initially
+    updateFilenameOccurrences();
+
+    var pagenumber = 0;
+
+    function buttonClick() {
+
+        var pg = $("#pageNumber").val();
+
+        $.ajax({
+            url: "getAllFilesofUser.php",
+            type: "GET",
+            data: {pg:pg},
+            success:function (result) {
+                $('#tbodyTable').html(result);
+                $('#pageNumber').val(pagenumber);
+            }
+        })
+        updateFilenameOccurrences();
+    }
+    buttonClick();
+
+    function nextPage(){
+        pagenumber += 1;
+        document.getElementById("pageNumber").value = pagenumber;
+       buttonClick();
+    }
+
+    function prevPage(){
+        if(pagenumber > 0)
+            pagenumber -=1;
+        document.getElementById("pageNumber").value = pagenumber;
+        buttonClick();
+    }
+    $(document).ready(function () {
+
+        document.getElementById("pageNumber").value = pagenumber;
+
+        $('#prevButton').click(function (){prevPage();     $('#submitButton').trigger('click');});
+        $('#nextButton').click(function (){nextPage();     $('#submitButton').trigger('click');});
+
+
+    });
+</script>
+</body>
+</html>

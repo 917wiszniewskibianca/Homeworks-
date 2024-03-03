@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="add.css" >
+    <title>Add Room</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#submitButton').click(function () {
+                var category = $("#category").val();
+                var type = $("#type").val();
+                var price = $("#price").val();
+                var hotel = $("#hotel").val();
+
+                if (category != '' && type != '' && price != '' && hotel != '')
+                {
+                    $.ajax({
+                        url: "add-room.php",
+                        type: "POST",
+                        data: { category:category, type:type, price:price, hotel:hotel},
+                        success:function (result) {
+                            window.location.href = "add-room.html";
+                            alert(result);
+                        }
+                    })
+                }
+                else{
+                    alert("Complete the required fields!");
+                }
+            });
+        });
+
+
+    </script>
+</head>
+
+<body>
+<h1> Room Booking </h1>
+<br>
+<br>
+<div class="add-container">
+    <h2> Add Room</h2>
+    <div class="settings">
+        <label>Category</label>
+        <input type="text" id="category" name="category" >
+        <label>Type</label>
+        <input type="text" id="type" name="type">
+        <label>Price</label>
+        <input type="text" id="price" name="price">
+        <label>Hotel</label>
+        <input type="text" id="hotel" name="hotel">
+    </div>
+    <input type="submit" class="submit" value="Add" id="submitButton"> <!-- creates the add button on the page-->
+</div>
+
+</body>
+</html>

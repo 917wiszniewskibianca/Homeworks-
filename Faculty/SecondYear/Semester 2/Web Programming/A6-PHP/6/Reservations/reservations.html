@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<head>
+    <title>Reservations</title>
+    <link rel="icon" href="../Resources/t.jpeg">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+
+
+        function GetDetail(str) {
+            if (str.length == 0) {
+                document.getElementById("addCategory").value = "";
+                document.getElementById("addHotel").value = "";
+                document.getElementById("addPrice").value = "";
+                document.getElementById("addType").value = "";
+                return;
+            }
+            else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 &&
+                        this.status == 200) {
+
+                        var myObj = JSON.parse(this.responseText);
+                        document.getElementById
+                        ("addCategory").value = myObj[0];
+                        document.getElementById(
+                            "addType").value = myObj[1];
+                        document.getElementById(
+                            "addPrice").value = myObj[2];
+                        document.getElementById(
+                            "addHotel").value = myObj[3];
+                    }
+                };
+
+                xmlhttp.open("GET", "getRoom.php?roomID=" + str, true);
+                xmlhttp.send();}
+        }
+
+        function GetClient(str) {
+            if (str.length == 0) {
+                document.getElementById("firstName").value = "";
+                document.getElementById("lastName").value = "";
+                return;
+            }
+            else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 &&
+                        this.status == 200) {
+
+                        var myObj = JSON.parse(this.responseText);
+                        document.getElementById
+                        ("firstName").value = myObj[0];
+                        document.getElementById(
+                            "lastName").value = myObj[1];
+                    }
+                };
+
+                xmlhttp.open("GET", "getClient.php?cnp=" + str, true);
+                xmlhttp.send();}
+        }
+
+
+        $(document).ready(function () {
+            $('#intervalButton').click(function(){
+
+                var roomID= $("#addRoomID").val();
+                var startDate = "";
+                var endDate = "";
+
+                $.ajax({
+                    url: "getIntervals.php",
+                    type: "GET",
+                    data: { startDate:startDate,endDate:endDate,roomID:roomID},
+                    success:function (result) {
+                        $('#notFreeIntervalBody').html(result);
+                    }
+                });
+            });
+
+
+            $('#deleteButton').click(function () {
+                var cnp= $("#cnp").val();
+                var roomID =  $("#roomID").val();
+                var startDate = $("#startDate").val();
+                var endDate = $("#endDate").val();
+
+                if (roomID != "" && cnp != "")
+                {
+                    $.ajax({
+                        url: "remove-reservation.php",
+                        type: "POST",
+                        data: { roomID:roomID, cnp:cnp,startDate:startDate,endDate:endDate},
+                        success:function (result) {
+                            window.location.href = "reservations.html";
+                            alert(result);
+                        }
+                    })
+                }
+                else{
+                    alert("Complete the required fields!");
+                }
+            });
+
+            $('#myReservationTableBody').click(function (){
+                {
+                    var table = document.getElementById('myReservationTable');
+
+                    for(var i = 1; i < table.rows.length; i++)
+                    {
+                        table.rows[i].onclick = function()
+                        {
+                            document.getElementById("roomID").value = this.cells[0].innerHTML;
+                            document.getElementById("category").value = this.cells[1].innerHTML;
+                            document.getElementById("type").value = this.cells[2].innerHTML;
+                            document.getElementById("price").value = this.cells[3].innerHTML;
+                            document.getElementById("hotel").value = this.cells[4].innerHTML;
+                            document.getElementById("startDate").value =this.cells[5].innerHTML;
+                            document.getElementById("endDate").value =this.cells[6].innerHTML;
+                        };
+                    }
+                }
+            });
+
+            $('#addButton').click(function () {
+                var cnp= $("#addCnp").val();
+                var firstName = $("#addFirstName").val();
+                var lastName = $("#addLastName").val();
+                var startDate = $("#addStartDate").val();
+                var endDate = $("#addEndDate").val();
+                var roomID =  $("#addRoomID").val();
+
+
+                if (cnp != '' && firstName != '' && lastName != '' && startDate != ''&& endDate != '')
+                {
+                    $.ajax({
+                        url: "add-reservation.php",
+                        type: "POST",
+                        data: { cnp:cnp, firstName:firstName, lastName:lastName,startDate:startDate,endDate:endDate,roomID:roomID},
+                        success:function (result) {
+                            window.location.href = "reservations.html";
+                            alert(result);
+                        }
+                    })
+                }
+                else{
+                    alert("Complete the required fields!");
+                }
+            });
+
+            $('#findButton').click(function(){
+
+                var cnp= $("#cnp").val();
+                var category = "";
+                var type = "";
+                var price = "";
+                var hotel = "";
+                var startDate = "";
+                var endDate = "";
+                var roomID = "";
+
+                $.ajax({
+                    url: "getReservations.php",
+                    type: "GET",
+                    data: { cnp:cnp,category:category,type:type,price:price,hotel:hotel,startDate:startDate,endDate:endDate,roomID:roomID},
+                    success:function (result) {
+                        $('#myReservationTableBody').html(result);
+                    }
+                });
+            });
+
+        })
+
+
+    </script>
+
+    <style type="text/css">
+
+        body{
+            background-image: url("../Resources/t.jpeg");
+        }
+
+        label{
+            font-size: 25px;
+            color:white;
+            font-weight: bold;
+        }
+
+        div.settings {
+            display:grid;
+            justify-content: center;
+            grid-template-columns: max-content max-content;
+            grid-gap:5px;
+        }
+
+        .container{
+            margin-top: 5%;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+        }
+
+        p{
+            text-align: center;
+            font-size: 50px;
+            color:white;
+            font-weight: bold;
+        }
+
+        .submit{
+            margin: auto;
+            margin-top: 10px;
+            width: 200px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            font-weight: bold;
+            background-color: grey;
+            color: white;
+        }
+        h1{
+            position: absolute;
+            top: 10%;
+            right: 50%;
+            transform: translate(50%,-50%);
+            text-transform: uppercase;
+            font-family: verdana;
+            font-size: 2em;
+            font-weight: 700;
+            color: darkred;
+        }
+
+        .addReservation{
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        .removeReservation{
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        #myReservationTable {
+            margin-top: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #myReservationTable td, #myReservationTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #myReservationTable tr {background-color: #f2f2f2;}
+
+        #myReservationTable tr:hover {background-color: #ddd;}
+
+        #myReservationTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: grey;
+            color: white;
+            text-align: center;
+        }
+
+        #myReservationTableBody{
+            justify-content: center;
+            text-align: center;
+        }
+
+        #notFreeInterval {
+            margin-top: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #notFreeInterval td, #notFreeInterval th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #notFreeInterval tr {background-color: #f2f2f2;}
+
+        #notFreeInterval tr:hover {background-color: #ddd;}
+
+        #notFreeInterval th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: grey;
+            color: white;
+            text-align: center;
+        }
+
+        #notFreeIntervalBody{
+            justify-content: center;
+            text-align: center;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<h1> Room Booking </h1>
+<div class="container">
+
+    <table id="notFreeInterval">
+        <tr>
+            <th>Unavailable Intervals</th>
+        </tr>
+        <tbody id="notFreeIntervalBody">
+        </tbody>
+    </table>
+
+    <div class="addReservation">
+        <p>Add <br>reservation</p>
+        <div class="settings">
+            <label>CNP</label>
+            <input type="text" id="addCnp" name="addCnp" >
+            <label>First name</label>
+            <input type="text" id="addFirstName" name="addFirstName" >
+            <label>Last name</label>
+            <input type="text" id="addLastName" name="addLastName" >
+            <label style="color: black">Room data:</label>
+            <br>
+            <label>RoomID</label>
+            <input type="text" id="addRoomID" name="addRoomID" onkeyup="GetDetail(this.value)">
+            <label>Category</label>
+            <input type="text" id="addCategory" name="addCategory" readonly>
+            <label>Type</label>
+            <input type="text" id="addType" name="addType" readonly>
+            <label>Price</label>
+            <input type="text" id="addPrice" name="addPrice" readonly>
+            <label>Hotel</label>
+            <input type="text" id="addHotel" name="addHotel" readonly>
+            <label style="color: black">Reservation Info:</label>
+            <br>
+            <label>Start date</label>
+            <input type="text" id="addStartDate" name="addStartDate" placeholder="YYYY-MM-DD">
+            <label>End date</label>
+            <input type="text" id="addEndDate" name="addEndDate" placeholder="YYYY-MM-DD">
+        </div>
+        <input type="submit" class="submit" value="Show unavailable intervals" id="intervalButton">
+        <input type="submit" class="submit" value="Add" id="addButton">
+    </div>
+
+    <div class="removeReservation">
+        <p>Cancel reservation</p>
+        <div class="settings">
+            <label>CNP</label>
+            <input type="text" id="cnp" name="cnp" onkeyup="GetClient(this.value)">
+            <label>First name</label>
+            <input type="text" id="firstName" name="firstName" readonly>
+            <label>Last name</label>
+            <input type="text" id="lastName" name="lastName" readonly>
+            <label style="color: black">Room data:</label>
+            <br>
+            <label>RoomID</label>
+            <input type="text" id="roomID" name="roomID" readonly>
+            <label>Category</label>
+            <input type="text" id="category" name="category" readonly>
+            <label>Type</label>
+            <input type="text" id="type" name="type" readonly>
+            <label>Price</label>
+            <input type="text" id="price" name="price" readonly>
+            <label>Hotel</label>
+            <input type="text" id="hotel" name="hotel" readonly>
+            <label style="color: black">Reservation Info:</label>
+            <br>
+            <label>Start date</label>
+            <input type="text" id="startDate" name="startDate" placeholder="YYYY-MM-DD" readonly>
+            <label>End date</label>
+            <input type="text" id="endDate" name="endDate" placeholder="YYYY-MM-DD" readonly>
+        </div>
+        <input type="submit" class="submit" value="Find my reservations" id="findButton">
+        <input type="submit" class="submit" value="Delete" id="deleteButton">
+    </div>
+    <div >
+    <table id="myReservationTable">
+        <tr>
+            <th>RoomID</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Hotel</th>
+            <th>Start date</th>
+            <th>End date</th>
+        </tr>
+        <tbody id="myReservationTableBody">
+        </tbody>
+    </table>
+   </div>
+
+</div>
+
+
+</body>
+</html>

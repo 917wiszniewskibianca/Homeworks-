@@ -1,0 +1,27 @@
+body{
+    background-image: url("../Resources/castle.jpg");
+    text-align: center;
+    font-size: 25px;
+}
+h1{
+    margin-top : 20%;
+
+}
+
+label{
+    font-size: 25px;
+    color:white;
+    font-weight: bold;
+}
+
+.add-container{
+    position: center;
+
+}
+
+.settings{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: max-content max-content;
+    grid-gap:5px;
+}

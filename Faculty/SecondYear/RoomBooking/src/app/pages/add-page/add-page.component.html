@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Room</title>
+</head>
+<body>
+
+<h1>Room Booking</h1>
+<br>
+<br>
+<div class="add-container">
+  <h2>Add Room</h2>
+  <div class="settings">
+    <label>Category</label>
+    <input type="text" #txtCategory (keyup.enter) = "GetCategory(txtCategory.value)" >
+    <label>Type</label>
+    <input type="text" #txtType (keyup.enter) = "GetType(txtType.value)" >
+    <label>Price</label>
+    <input type="text" #txtPrice (keyup.enter) = "GetPrice(txtPrice.value)" >
+    <label>Hotel</label>
+    <input type="text" #txtHotel (keyup.enter) = "GetHotel(txtHotel.value)" >
+  </div>
+  <input type="submit" class="submit" value="Add" id="submitButton" (click)="onSubmit()">
+
+</div>
+
+</body>
+</html>

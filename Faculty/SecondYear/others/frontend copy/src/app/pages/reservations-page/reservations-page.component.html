@@ -1,0 +1,87 @@
+<body>
+
+<h1>Room Booking</h1>
+<div class="container">
+  <div class="addReservation">
+    <p>Add<br>reservation</p>
+    <div class="settings">
+      <label>First name</label>
+      <input type="text" #txtFirstName (keyup.enter) = "GetFirstName(txtFirstName.value)" >
+      <label>Last name</label>
+      <input type="text" #txtLastName (keyup.enter) = "GetLastName(txtLastName.value)" >
+      <label style="color: black">Room data:</label><br>
+      <label>RoomID</label>
+      <input type="text" #txtRoomId (keyup.enter) = "GetRoomId(txtRoomId.value)" >
+      <!--<label>Category</label>
+      <input type="text" #txtCategory (keyup.enter) = "GetCategory(txtCategory.value)" >
+      <label>Type</label>
+      <input type="text" #txtType (keyup.enter) = "GetType(txtType.value)" >
+      <label>Price</label>
+      <input type="text" #txtPrice (keyup.enter) = "GetPrice(txtPrice.value)" >
+      <label>Hotel</label>
+      <input type="text" #txtHotel (keyup.enter) = "GetHotel(txtHotel.value)" >
+      <label style="color: black">Reservation Info:</label><br> -->
+      <label>Start date</label>
+      <input type="text" #txtStartDate (keyup.enter) = "GetStartDate(txtStartDate.value)" placeholder="YYYY-MM-DD" >
+      <label>End date</label>
+      <input type="text" #txtEndDate (keyup.enter) = "GetEndDate(txtEndDate.value)" placeholder="YYYY-MM-DD" >
+    </div>
+    <input type="submit" class="submit" value="Show unavailable intervals" id="intervalButton" (click)="showUnavailableIntervals()">
+    <input type="submit" class="submit" value="Add" id="addButton" (click)="addReservation()">
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let interval of intervals">
+      <td>{{ interval.startDate }}</td>
+      <td>{{ interval.endDate }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+
+  <div class="removeReservation">
+    <p>Cancel reservation</p>
+    <div class="settings">
+      <label> Reservation Id</label>
+      <input type="text" #txtReservationId (keyup.enter) = "GetReservationId(txtReservationId.value)" >
+    </div>
+    <input type="submit" class="submit" value="Find my reservations" id="findButton" (click)="findReservations()">
+    <input type="submit" class="submit" value="Delete" id="deleteButton" (click)="cancelReservation()">
+  </div>
+
+  <div>
+    <table id="myReservationTable">
+      <tr>
+        <th>ReservationID</th>
+        <th>RoomID</th>
+        <th>Category</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Hotel</th>
+        <th>Start date</th>
+        <th>End date</th>
+      </tr>
+
+
+      <tr *ngFor="let reservation of myReservations">
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.roomId}}</td>
+        <td>{{ reservation.category }}</td>
+        <td>{{ reservation.type }}</td>
+        <td>{{ reservation.price }}</td>
+        <td>{{ reservation.hotel }}</td>
+        <td>{{ reservation.startDate }}</td>
+        <td>{{ reservation.endDate }}</td>`
+      </tr>
+    </table>
+  </div>
+</div>
+</body>

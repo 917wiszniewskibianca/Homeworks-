@@ -1,0 +1,67 @@
+@using WebApplication2.Models
+
+
+@{
+    ViewBag.Title = "All Posts";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<Posts> allPosts = ViewBag.List;
+}
+
+<script>
+   // Function to check for updates
+   function checkForUpdates() {
+       fetch('Notify/ProcessRequest')
+           .then(response => response.json())
+           .then(result => {
+               if (result !== null) {
+                   // Display the last added post information
+                   alert('Last Added Post:\n\nUser: ' + result.user + '\nTopic: ' + result.topic + '\nText: ' + result.text + '\nDate: ' + result.date);
+               }
+               alert("We dit it!");
+           })
+           .catch(error => console.log(error));
+
+   }
+   setInterval(checkForUpdates, 5000);
+ </script>
+
+<h2>All Posts </h2>
+<div class="posts"  style="font-size: 20px;">
+    @foreach ( Posts post in allPosts)
+    {<table>
+         <tr><td>User :</td><td>@post.user</td></tr>
+         <tr><td>Topic :</td><td>@post.topic</td></tr>
+         <tr><td>Text :</td><td>@post.text</td></tr>
+         <tr><td>Date :</td><td>@post.date</td></tr>
+         <tr><td>Enter Topic: </td> <td><input type="text" id="newTopic"></input></td></tr>
+         <tr><td>Enter Text: </td> <td><input type="text" id="newText"></input></td></tr>
+         <tr> <td><button onclick="modify(@post.id)" value="Go">Go</button></td></tr>
+         <br></br>
+     </table>                                   
+    }
+    <table>
+        <br></br>
+         <tr><td>Add Text</td><td><input type="text" id="addText"></td></tr>
+        <tr><td>Add Topic</td><td><input type="text" id="addTopic"></td></tr>
+        <tr> <td><button onclick="add()" value="Add">Add</button></td></tr>
+        <br> </br>
+        
+    </table>
+</div>
+<script>
+  function modify(id){
+       var topic =document.getElementById("newTopic").value;
+       var text= document.getElementById("newText").value;
+       window.location.href = '@Url.Action("ModifyPosts","Posts")' + '?newTopic='+ topic +'&newText=' + text + '&idd=' + id;
+  }
+      
+  function add(){
+      var text =document.getElementById("addText").value;
+      var topic = document.getElementById("addTopic").value;
+      window.location.href ='@Url.Action("AddPost","Posts")' + '?addText=' + text +'&addTopic=' + topic ;
+      
+    }
+</script>
+

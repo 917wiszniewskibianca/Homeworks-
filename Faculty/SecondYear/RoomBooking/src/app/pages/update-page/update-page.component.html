@@ -1,0 +1,43 @@
+<body>
+<h1> Room Booking </h1>
+<div class="container">
+  <p>Update room</p>
+  <div class="settings">
+    <label>RoomID</label>
+    <input type="text" id="id" name="id" readonly>
+    <label>Category</label>
+    <input type="text" id="category" name="category">
+    <label>Type</label>
+    <input type="text" id="type" name="type">
+    <label>Price</label>
+    <input type="text" id="price" name="price">
+    <label>Hotel</label>
+    <input type="text" id="hotel" name="hotel">
+  </div>
+  <input type="submit" class="submit" value="Update" id="submitButton">
+</div>
+
+<table id="dataTable">
+  <tr>
+    <th>RoomID</th>
+    <th>Category</th>
+    <th>Type</th>
+    <th>Price</th>
+    <th>Hotel</th>
+  </tr>
+  <tbody id="tbodyTable">
+  </tbody>
+</table>
+<!--                  Probleme cu afisarea camerelor!!!!
+  <tbody>
+      <tr *ngFor="let room of rooms" (click)="selectRoom(room)">
+        <td>{{ room.id }}</td>
+        <td>{{ room.category }}</td>
+        <td>{{ room.type }}</td>
+        <td>{{ room.price }}</td>
+        <td>{{ room.hotel }}</td>
+      </tr>
+    </tbody>
+   -->
+
+</body>

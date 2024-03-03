@@ -1,0 +1,15 @@
+@model dynamic
+
+@{
+    ViewBag.Title = "All Courses for Student";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<string> stringArray = ViewBag.List;
+}
+
+<h3>All Participants to Course : </h3>
+@foreach (string str in stringArray)
+{
+    <p>@str</p>
+}
